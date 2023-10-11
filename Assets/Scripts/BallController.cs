@@ -18,6 +18,10 @@ public class BallController : MonoBehaviour
 
     private Color solveColor;
 
+    public ParticleSystem burst;
+    public AudioClip hitSound;
+    public AudioSource playerAudio;
+
     private void Start()
     {
         solveColor = Random.ColorHSV(0.5f, 1);
@@ -48,6 +52,8 @@ public class BallController : MonoBehaviour
             if(Vector3.Distance(transform.position, nextCollisionPosition) < 1)
             {
                 isTravelling = false;
+                playerAudio.PlayOneShot(hitSound, 1.0f);
+                burst.Play();
                 travelDirection = Vector3.zero;
                 nextCollisionPosition = Vector3.zero;
             }
@@ -101,6 +107,8 @@ public class BallController : MonoBehaviour
         if (Physics.Raycast(transform.position,direction,out hit, 100f))
         {
             nextCollisionPosition = hit.point;
+            
+           
         }
 
         isTravelling = true;
